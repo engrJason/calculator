@@ -1,52 +1,33 @@
 const lastOutput = document.querySelector('.last-output');
 const currentOutput = document.querySelector('.current-output');
-const clearButton = document.querySelector('.clear');
-const deleteButton = document.querySelector('.delete');
-const operationButton = document.querySelector('.operation');
-const numberButton = document.querySelectorAll('.number');
-const equalsButton = document.querySelector('.equals');
+const buttons = document.querySelectorAll('button');
 
-class Calculator {
-    constructor(lastOutput, currentOutput) {
-        this.lastOutput = lastOutput;
-        this.currentOutput = currentOutput;
-        this.clear();
+function calculate() {
+    let text = this.innerText;
+
+    if(text === 'AC') {
+        lastOutput.innerText = '';
+        currentOutput.innerText = '';
+        return;
     }
 
-    updateDisplay() {
-        this.currentOutput.innerText = this.currentValue;
-        this.lastOutput.innerText = this.lastValue;
+    if(text === 'DEL') {
+        currentOutput.innerText = currentOutput.innerText.slice(0, -1);
+        return;
     }
 
-    clear() {
-        this.lastValue = '';
-        this.currentValue = '';
+    if(text === '='){
+        lastOutput.innerText = currentOutput.innerText;
+        currentOutput.innerText = eval(currentOutput.innerText);
+        return;
     }
 
-    delete() {
-        this.currentValue = this.currentValue.slice(0, -1);
-    }
-
-    insertNumber(number) {
-        this.currentValue += number.toString();
+    else {
+        currentOutput.innerText += text;
+        return;
     }
 }
 
-const calculator = new Calculator(lastOutput, currentOutput) 
-
-numberButton.forEach(button => {
-    button.addEventListener('click', () => {
-        calculator.insertNumber(button.innerText);
-        calculator.updateDisplay();
-    })
+buttons.forEach(key => {
+    key.addEventListener('click', calculate);
 });
-
-clearButton.addEventListener('click', () => {
-    calculator.clear();
-    calculator.updateDisplay();
-});
-
-deleteButton.addEventListener('click', () => {
-    calculator.delete();
-    calculator.updateDisplay();
-})

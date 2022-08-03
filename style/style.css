@@ -37,7 +37,7 @@ button:hover {
     font-weight: bold;
 }
 
-.clear, .equals {
+.two-col {
     grid-column: span 2;
 }
 
